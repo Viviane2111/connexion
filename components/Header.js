@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faXmark, faPaw } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,6 +18,7 @@ function Header() {
   const [signInPassword, setSignInPassword] = useState("");
   // modale
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLogin, setIslogin] = useState(true);
 
   //* INSCRIPTION
   const handleRegister = () => {
@@ -77,62 +79,83 @@ function Header() {
     setIsModalVisible(!isModalVisible);
   };
 
+  //* TOGGLE FORMULAIRE
+  const toggleForm = () => {
+    setIslogin(!isLogin);
+  }
+
   //* CONTENU MODALE
   let modalContent;
   modalContent = (
-    <div className="flex border justify-center">
-      <div className=" flex flex-col items-center m-5 ">
-        <p className="mb-2">S'inscrire</p>
-        <input
-          className="w-full px-3 py-1 border rounded-md focus:outline-none focus:border-blue-400 block mb-2"
-          type="text"
-          placeholder="Username"
-          id="signUpUsername"
-          onChange={(e) => setSignUpUsername(e.target.value)}
-          value={signUpUsername}
-        />
-        <input
-          className="w-full px-3 py-1 border rounded-md focus:outline-none focus:border-blue-400 block mb-2"
-          type="password"
-          placeholder="Password"
-          id="signUpPassword"
-          onChange={(e) => setSignUpPassword(e.target.value)}
-          value={signUpPassword}
-        />
-        <button
-          className="cursor-pointer w-full border rounded-full text-red-800"
-          id="register"
-          onClick={() => handleRegister()}
-        >
-          Inscription
-        </button>
-      </div>
-      <div className=" flex flex-col items-center m-5 ">
-        <p className="mb-2">Se connecter</p>
-        <input
-          className="w-full px-3 py-1 border rounded-md focus:outline-none focus:border-blue-400 block mb-2"
-          type="text"
-          placeholder="Username"
-          id="signInUsername"
-          onChange={(e) => setSignInUsername(e.target.value)}
-          value={signInUsername}
-        />
-        <input
-          className="w-full px-3 py-1 border rounded-md focus:outline-none focus:border-blue-400 block mb-2"
-          type="password"
-          placeholder="Password"
-          id="signInPassword"
-          onChange={(e) => setSignInPassword(e.target.value)}
-          value={signInPassword}
-        />
-        <button
-          className="cursor-pointer w-full border rounded-full text-red-800"
-          id="connection"
-          onClick={() => handleConnection()}
-        >
-          Connexion
-        </button>
-      </div>
+    <div className="flex border-t justify-center mt-2">
+      {isLogin ? (
+        <div className=" flex flex-col items-center m-5 ">
+          <p className="mb-2">Se connecter</p>
+          <input
+            className="w-full text-center px-16 py-1 border rounded-md focus:outline-none focus:border-blue-400 block mb-2"
+            type="text"
+            placeholder="Username"
+            id="signInUsername"
+            onChange={(e) => setSignInUsername(e.target.value)}
+            value={signInUsername}
+          />
+          <input
+            className="w-full text-center px-16 py-1 border rounded-md focus:outline-none focus:border-blue-400 block mb-2"
+            type="password"
+            placeholder="Password"
+            id="signInPassword"
+            onChange={(e) => setSignInPassword(e.target.value)}
+            value={signInPassword}
+          />
+          <button
+            className="cursor-pointer w-full border rounded-full text-red-800"
+            id="connection"
+            onClick={() => handleConnection()}
+          >
+            Connexion
+          </button>
+          <div className="mt-4">
+            <span className="text-blue-500 cursor-pointer" onClick={toggleForm}>
+              Pas encore inscrits ?
+            </span>
+          </div>
+        </div>
+      ) : (
+        <div className=" flex flex-col items-center m-5 ">
+          <p className="mb-2">S'inscrire</p>
+          <input
+            className="w-full text-center px-16 py-1 border rounded-md focus:outline-none focus:border-blue-400 block mb-2"
+            type="text"
+            placeholder="Username"
+            id="signUpUsername"
+            onChange={(e) => setSignUpUsername(e.target.value)}
+            value={signUpUsername}
+          />
+          <input
+            className="w-full text-center px-16 py-1 border rounded-md focus:outline-none focus:border-blue-400 block mb-2"
+            type="text"
+            placeholder="E-mail"
+            id="signUpUsername"
+            onChange={(e) => setSignUpUsername(e.target.value)}
+            value={signUpUsername}
+          />
+          <input
+            className="w-full text-center px-16 py-1 border rounded-md focus:outline-none focus:border-blue-400 block mb-2"
+            type="password"
+            placeholder="Password"
+            id="signUpPassword"
+            onChange={(e) => setSignUpPassword(e.target.value)}
+            value={signUpPassword}
+          />
+          <button
+            className="cursor-pointer w-full border rounded-full text-red-800"
+            id="register"
+            onClick={() => handleRegister()}
+          >
+            <span onClick={toggleForm}>Inscription</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 
@@ -153,8 +176,10 @@ function Header() {
 
   return (
     <div className="max-h-screen">
-      <div className="max-h-1/5 flex justify-between mx-10 mt-5">
-        <FontAwesomeIcon icon={faPaw} />
+      <div className="max-h-1/5 h-[44px] flex items-center justify-between mx-10  cursor-pointer">
+        <Link href="/modalTrial">
+          <FontAwesomeIcon icon={faPaw} />
+        </Link>
         {userSection}
       </div>
       <div className="">{isModalVisible && modalContent}</div>

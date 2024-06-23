@@ -21,25 +21,13 @@ function Home() {
     username = user.username;
     console.log("Utilisateur", username);
   }
-  
-  //* DECONNEXION
-  // const handleLogout = () => {
-  //   dispatch(logout());
-  // };
-  // let logoutBnt;
-  // if (user.isConnected) {
-  //   logoutBnt = (
-  //     <div>
-  //       <button onClick={() => handleLogout()}>Déconnexion</button>
-  //     </div>
-  //   );
-  // }
 
   return (
     <div>
-      <Header />
-      <main className={styles.main}>
-        {/* <div className="">{logoutBnt}</div> */}
+      <div className="border-b">
+        <Header />
+      </div>
+      <main className="flex flex-col items-center h-[100vh] my-16">
         <Moment className={styles.date} date={date} format="dddd DD MMM YYYY" />
         <h1 className={styles.title}>Welcome {username}</h1>
       </main>
